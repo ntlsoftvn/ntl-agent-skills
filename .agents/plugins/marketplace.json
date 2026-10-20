@@ -1,7 +1,7 @@
 {
   "name": "ntl-marketplace",
   "interface": {
-    "displayName": "NTL Marketplace"
+    "displayName": "NTL"
   },
   "plugins": [
     {
