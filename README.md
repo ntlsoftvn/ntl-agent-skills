@@ -1,4 +1,4 @@
-# NTL agent skills
+# NTL Agent Skills
 
 Marketplace của NTL Software cho Claude và ChatGPT/Codex. Plugin **ntl-plugin** gom skill của các phòng ban trong NTL, dùng chung một bộ style NTL. Skill của phòng ban mới được thêm vào cùng plugin này.
 
@@ -11,18 +11,16 @@ Skill hiện có:
 
 Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên file, cách viết) ở `plugins/ntl-plugin/references/`, `assets/` và `scripts/`.
 
-## Cài đặt (người dùng)
+## Cài đặt
 
-Link repo (public, không cần tài khoản GitHub): `https://github.com/ntlsoftvn/ntl-agent-skills`.
-
-### Claude Desktop (tab Code hoặc Cowork)
+### Claude Desktop
 
 1. Mở **Customize → Browse plugins** (hoặc **Settings → Plugins**) → **Add marketplace**.
 2. Dán link repo, xác nhận. Marketplace có tên `ntl-marketplace`.
 3. Chọn **ntl-plugin** → **Install**.
 4. Mở phiên mới. Gõ yêu cầu như "soạn proposal cho dự án X" hoặc gọi thẳng `/ntl-plugin:proposal`, `/ntl-plugin:training`.
 
-### ChatGPT / Codex desktop
+### ChatGPT / Codex Desktop
 
 1. Mở **Plugins** → **Add marketplace** (Codex: **Plugins → Marketplaces → Add**), dán link repo.
 2. Cài **ntl-plugin**. Skill dùng được trong Codex và trong ChatGPT Work trên app desktop.
