@@ -172,11 +172,9 @@ body, .card, header, .win { transition: background-color .3s ease, border-color 
 @media (max-width: 560px) { .appbtns { grid-template-columns: 1fr; } }
 /* tools */
 .opanel { width: fit-content; max-width: 100%; margin: 0 auto; }
-.trow { display: grid; grid-template-columns: 210px 1fr; gap: 12px 18px; align-items: start; margin-bottom: 10px; }
+.trow { display: grid; grid-template-columns: 210px 1fr; gap: 12px 18px; align-items: center; margin-bottom: 10px; }
 .tinfo { display: grid; gap: 2px; font-size: 13.5px; padding-top: 4px; }
 .tinfo b { font-size: 15px; color: var(--ink); }
-.tchk { color: var(--ink-3); }
-.tchk code { font-size: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
 @media (max-width: 700px) { .trow { grid-template-columns: 1fr; gap: 6px; margin-bottom: 14px; } }
 .dl .btn { padding: 9px 16px; font-size: 14px; }
 .cmd { display: flex; min-width: 0; align-items: flex-start; gap: 10px; background: var(--code-bg); border-left: 4px solid var(--orange); border-radius: 8px; padding: 12px 10px 12px 16px; }
@@ -239,7 +237,7 @@ footer { padding: 40px 0 28px; font-size: 14px; color: var(--ink-3); background:
     </div>
     <div class="reveal">
       <div class="opanel">
-        <div class="trow"><div class="tinfo"><b>Python 3.9+</b><span class="tchk"><span class="vi">Kiểm tra</span><span class="en">Check</span>: <code>python --version</code></span></div><div class="dl"><a class="btn btn-ghost" href="https://www.python.org/downloads/" target="_blank" rel="noopener"><span><span class="vi">Tải về</span><span class="en">Download</span> · python.org ↗</span></a></div></div>
+        <div class="trow"><div class="tinfo"><b>Python 3.9+</b></div><div class="dl"><a class="btn btn-ghost" href="https://www.python.org/downloads/" target="_blank" rel="noopener"><span><span class="vi">Tải về</span><span class="en">Download</span> · python.org ↗</span></a></div></div>
         <div class="trow"><div class="tinfo"><b>Google Chrome</b></div><div class="dl"><a class="btn btn-ghost" href="https://www.google.com/chrome/" target="_blank" rel="noopener"><span><span class="vi">Tải về</span><span class="en">Download</span> · google.com/chrome ↗</span></a></div></div>
       </div>
     </div>
