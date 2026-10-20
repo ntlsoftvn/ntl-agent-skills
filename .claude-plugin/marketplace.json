@@ -11,7 +11,7 @@
       "name": "ntl",
       "source": "./plugins/ntl",
       "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
-      "version": "0.4.0"
+      "version": "0.4.1"
     }
   ]
 }
