@@ -92,7 +92,7 @@ function createDeck({ project, docType = "Proposal", version = "1.0", date = "",
     return s;
   };
 
-  d.cover = ({ title, subtitle, kicker = `NTL SOFTWARE  ·  ${docType.toUpperCase()}`, versionLabel = "Version", logo = false, sectionTitle = "Intro" } = {}) => {
+  d.cover = ({ title, subtitle, kicker = `NTL SOFTWARE  ·  ${docType.toUpperCase()}`, versionLabel = "Version", logo = true, sectionTitle = "Intro" } = {}) => {
     d.section(sectionTitle);
     const s = pres.addSlide({ masterName: "NTL_COVER", sectionTitle });
     s.addShape(pres.shapes.RIGHT_TRIANGLE, { x: W - px(360), y: 0, w: px(360), h: px(360), rotate: 180, fill: { color: H.orange }, line: { color: H.orange }, objectName: "tri-orange" });

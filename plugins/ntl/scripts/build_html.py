@@ -278,7 +278,7 @@ def init(kind, target, force=False):
     if "ntl-assets/" in src:
         na = target / "ntl-assets"
         (na / "fonts").mkdir(parents=True, exist_ok=True)
-        for f in ("style.css", "cover-tri.svg"):
+        for f in ("style.css", "cover-tri.svg", "logo-white.png"):
             shutil.copyfile(ASSETS / f, na / f)
         for f in (ASSETS / "fonts").iterdir():
             shutil.copyfile(f, na / "fonts" / f.name)

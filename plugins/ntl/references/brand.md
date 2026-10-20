@@ -35,7 +35,7 @@ The public website uses a brighter blue (`0C5ADB`, `0C1BAE`); documents do not.
 
 ## Logo
 
-`PLUGIN/assets/logo.png` (on light backgrounds, 369×139) and `PLUGIN/assets/logo-white.png` (on navy, 738×474), from the website. Keep the proportions; leave clear space around it; no effects. Optional on covers.
+`PLUGIN/assets/logo.png` (on light backgrounds, 369×139) and `PLUGIN/assets/logo-white.png` (on navy, 738×474), from the website. Keep the proportions; leave clear space around it; no effects. On covers by default (white logo, top left of the deck and handbook cover).
 
 ## Fonts
 

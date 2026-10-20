@@ -14,7 +14,7 @@ NTL decks are generated with pptxgenjs through `PLUGIN/scripts/ntl_deck.js`, so 
 ```js
 const ntl = require(path.join(PLUGIN, "scripts", "ntl_deck.js"));
 const d = ntl.createDeck({ project, docType: "Proposal", version: "2.0", date: "10/2026", total: 11 });
-d.cover({ title, subtitle, logo: false });       // navy cover, triangles, kicker, version line
+d.cover({ title, subtitle });                    // navy cover, white NTL logo, triangles, kicker, version line (logo: false to omit)
 d.agenda([["Summary", 3], ...]);                   // numbered agenda with page numbers
 const s = d.content("Section", "Slide title");     // title + orange rule + footer + "N / total"
 d.txt(s, text, opts)  d.card(s, x, y, w, h, name, topColor)  d.box(s, x, y, w, h, "note"|"callout", name, text)
