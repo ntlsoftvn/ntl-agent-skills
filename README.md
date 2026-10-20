@@ -11,7 +11,7 @@ Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên
 
 ## Cài đặt (người dùng)
 
-Cần: tài khoản có quyền đọc repo GitHub này (nếu repo private) và link repo: `https://github.com/<org>/ntl-agent-skills`.
+Link repo (public, không cần tài khoản GitHub): `https://github.com/ntlsoftvn/ntl-agent-skills`.
 
 ### Claude Desktop (tab Code hoặc Cowork)
 
