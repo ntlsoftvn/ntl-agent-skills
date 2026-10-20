@@ -21,12 +21,12 @@ A short, visual proposal deck in the NTL house style, built as a real .pptx with
    - source material: estimate workbook, architecture notes, diagrams, cost sheet. Numbers come from these sources, never invented.
 2. **Read** `PLUGIN/references/brand.md`, `PLUGIN/references/writing.md`, `PLUGIN/references/pptx.md`, then `references/structure.md` and `references/decisions.md`.
 3. **Outline** the slides from `structure.md` (title + one-line message each) and show it to the user when the request is new; keep to the slide budgets.
-4. **Setup** Node once as in `pptx.md` (`setup_node.sh`, after telling the user it downloads npm packages).
-5. **Build script.** Copy `examples/proposal_deck.js` to the work folder as `build_deck.js`, set `NTL_PLUGIN` or keep the relative `PLUGIN` path, and replace the CONTENT block. Diagrams: SVG per `PLUGIN/references/diagrams.md`, exported to PNG.
+4. **Setup** Python once as in `pptx.md` (`setup_python.sh`, after telling the user it downloads the python-pptx package, if it is not installed).
+5. **Build script.** Copy `examples/proposal_deck.py` to the work folder as `build_deck.py`, set `NTL_PLUGIN` or keep the relative `PLUGIN` path, and replace the CONTENT block. Diagrams: SVG per `PLUGIN/references/diagrams.md`, exported to PNG.
 6. **Build and check.** Build, render with `render.sh`, look at every slide, fix, rebuild. Run the validator if available.
 7. **Cross-check numbers**: summary stats = roadmap total = cost slide = source workbook; agenda pages and `N / total` match the slides.
 8. **Name and deliver**: `<Project_Words_In_Title_Case>_Proposal_v<X.Y>.pptx` in the output folder. Report the path, the version, what was checked (and what was not, e.g. charts not visible in Keynote).
 
 ## Revisions
 
-Edit the CONTENT block of `build_deck.js`, never the .pptx. Apply wording decisions everywhere they occur (deck and companion workbook), bump the version only when the user asks for a new version, and re-run steps 6–8.
+Edit the CONTENT block of `build_deck.py`, never the .pptx. Apply wording decisions everywhere they occur (deck and companion workbook), bump the version only when the user asks for a new version, and re-run steps 6–8.

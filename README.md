@@ -13,6 +13,8 @@ Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên
 
 ## Cài đặt
 
+Hướng dẫn cài từng bước có ảnh chụp màn hình: [docs/index.html](docs/index.html). Bật GitHub Pages từ thư mục `docs/` của nhánh `main` để có link gửi cho mọi người: `https://ntlsoftvn.github.io/ntl-agent-skills/`.
+
 ### Claude Desktop
 
 1. Mở **Customize → Browse plugins** (hoặc **Settings → Plugins**) → **Add marketplace**.
@@ -45,11 +47,10 @@ Người bảo trì chạy `python3 tools/pack.py` và gửi file trong `dist/`:
 
 | Công cụ | Dùng cho | Ghi chú |
 |---|---|---|
-| Node.js 18+ | `proposal` (.pptx) | Lần đầu skill tự cài gói npm vào `~/.cache/ntl-agent-skills/node` (có hỏi trước) |
-| Python 3.9+ | `training` | Có sẵn trên macOS |
+| Python 3.9+ | `proposal` (.pptx), `training` | Có sẵn trên macOS. Lần đầu `proposal` tự cài gói `python-pptx` vào `~/.cache/ntl-agent-skills/python` (có hỏi trước) |
 | Google Chrome | `training` (render PDF) | |
-| poppler (`brew install poppler`) | số trang Mục lục, ảnh xem trước | Không có thì dùng `pip install pypdf` cho Mục lục |
-| Keynote hoặc LibreOffice | xem trước slide .pptx | Không có thì bỏ qua bước xem trước |
+| *Tuỳ chọn:* poppler (`brew install poppler`) | số trang Mục lục, ảnh xem trước | Không có thì dùng `pip install pypdf` cho Mục lục |
+| *Tuỳ chọn:* Keynote hoặc LibreOffice | xem trước slide .pptx | Không có thì bỏ qua bước xem trước |
 
 ## Cho người bảo trì
 
@@ -61,9 +62,10 @@ plugins/ntl/
   .codex-plugin/plugin.json          định nghĩa cho Codex / ChatGPT
   references/                        style chung: brand, writing, pptx, html, diagrams
   assets/                            logo, font DejaVu (+ LICENSE), style.css
-  scripts/                           ntl_deck.js (pptx), build_html.py (HTML → PDF), render, compare, preview
+  scripts/                           ntl_deck.py (pptx), build_html.py (HTML → PDF), render, compare, preview
   skills/<skill>/SKILL.md            mỗi skill; tham chiếu style chung bằng đường dẫn tương đối
 tools/pack.py                        tạo file .plugin và zip skill cho app không thêm được marketplace
+docs/index.html                      hướng dẫn cài đặt có ảnh chụp (GitHub Pages); logo và ảnh ở docs/assets/ (ảnh đã làm mờ lịch sử chat)
 ```
 
 Thử bản local trước khi push:

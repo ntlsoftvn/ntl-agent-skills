@@ -4,7 +4,7 @@ One plugin (`plugins/ntl`) serves Claude (Code, Cowork) and Codex / ChatGPT Work
 
 ## Where things go
 
-- NTL style shared by every skill lives only at plugin level: `references/` (brand, writing, pptx, html, diagrams), `assets/` (logo, fonts, style.css), `scripts/` (ntl_deck.js, build_html.py, render.sh, setup_node.sh, compare.py, preview_svg.py). A skill never keeps its own copy of these.
+- NTL style shared by every skill lives only at plugin level: `references/` (brand, writing, pptx, html, diagrams), `assets/` (logo, fonts, style.css), `scripts/` (ntl_deck.py, build_html.py, render.sh, setup_python.sh, compare.py, preview_svg.py). A skill never keeps its own copy of these.
 - A skill is `plugins/ntl/skills/<name>/` with `SKILL.md` (front matter `name`, `description` with the trigger phrases in English and Vietnamese) and its own `references/`, `templates/`, `examples/`.
 - Skills refer to shared files as `PLUGIN/…` (defined in SKILL.md as `SKILL_DIR/../..`) or with relative links (`../../../references/x.md` from a skill's reference). Keep that exact `PLUGIN` definition line: `tools/pack.py` rewrites it for the standalone zips.
 - Skill text is agent-neutral: when input is needed, "ask with a question tool if the agent has one, otherwise in chat". Client-specific settings (Claude `allowed-tools`, Codex `agents/openai.yaml`) only when really needed, with the condition stated.

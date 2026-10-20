@@ -1,7 +1,7 @@
 #!/bin/sh
 # Render a .pptx to PDF and PNG pages for visual QA:  sh render.sh deck.pptx out_dir [dpi]
 # Uses Keynote on macOS when installed, else LibreOffice (soffice); PNGs need poppler (pdftoppm).
-# Keynote does not draw pptxgenjs charts: check chart slides in PowerPoint or LibreOffice.
+# Keynote may not draw native charts: check chart slides in PowerPoint or LibreOffice.
 set -eu
 [ $# -ge 2 ] || { echo "usage: render.sh deck.pptx out_dir [dpi]" >&2; exit 2; }
 IN=$(cd "$(dirname "$1")" && pwd)/$(basename "$1"); OUT=$2; DPI=${3:-60}
