@@ -9,9 +9,9 @@
   "plugins": [
     {
       "name": "ntl",
-      "source": "./plugins/ntl-plugin",
+      "source": "./plugins/ntl",
       "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
-      "version": "0.3.0"
+      "version": "0.3.1"
     }
   ]
 }

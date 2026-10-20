@@ -13,7 +13,7 @@ import argparse, re, shutil, sys, tempfile, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PLUGIN = ROOT / "plugins" / "ntl-plugin"
+PLUGIN = ROOT / "plugins" / "ntl"
 SKIP = {".DS_Store", "__pycache__", "node_modules", ".index.build.html"}
 SHARED = ("references", "assets", "scripts")
 

@@ -9,7 +9,7 @@ Skill hiện có:
 | `proposal` | Kinh doanh / Delivery | Deck proposal (.pptx) cho PO / khách hàng: tóm tắt, kiến trúc hiện tại, vấn đề, giải pháp, lộ trình + team + effort, chi phí hạ tầng, giả định và rủi ro |
 | `training` | Đào tạo | Tài liệu đào tạo: thiết kế khóa học / topic, handbook (HTML → PDF A4), slide HTML cho workshop, quiz, kịch bản workshop |
 
-Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên file, cách viết) ở `plugins/ntl-plugin/references/`, `assets/` và `scripts/`.
+Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên file, cách viết) ở `plugins/ntl/references/`, `assets/` và `scripts/`.
 
 ## Cài đặt
 
@@ -56,7 +56,7 @@ Người bảo trì chạy `python3 tools/pack.py` và gửi file trong `dist/`:
 ```
 .claude-plugin/marketplace.json      danh sách plugin cho Claude
 .agents/plugins/marketplace.json     danh sách plugin cho Codex / ChatGPT
-plugins/ntl-plugin/
+plugins/ntl/
   .claude-plugin/plugin.json         định nghĩa cho Claude
   .codex-plugin/plugin.json          định nghĩa cho Codex / ChatGPT
   references/                        style chung: brand, writing, pptx, html, diagrams
@@ -78,4 +78,4 @@ codex plugin add ntl@ntl
 
 Thử xong thì gỡ (`claude plugin uninstall …`, `claude plugin marketplace remove ntl`, `codex plugin remove …`, `codex plugin marketplace remove ntl`) rồi cài lại từ link GitHub. Quy tắc sửa repo ở [AGENTS.md](AGENTS.md).
 
-Font DejaVu theo giấy phép trong `plugins/ntl-plugin/assets/fonts/LICENSE`. Template đào tạo lấy từ repo `ntl-training-hub`.
+Font DejaVu theo giấy phép trong `plugins/ntl/assets/fonts/LICENSE`. Template đào tạo lấy từ repo `ntl-training-hub`.

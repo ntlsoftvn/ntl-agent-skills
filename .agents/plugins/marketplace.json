@@ -8,7 +8,7 @@
       "name": "ntl",
       "source": {
         "source": "local",
-        "path": "./plugins/ntl-plugin"
+        "path": "./plugins/ntl"
       },
       "policy": {
         "installation": "AVAILABLE",
