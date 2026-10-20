@@ -1,6 +1,6 @@
 # NTL Agent Skills
 
-Marketplace của NTL Software cho Claude và ChatGPT/Codex. Plugin **ntl-plugin** gom skill của các phòng ban trong NTL, dùng chung một bộ style NTL. Skill của phòng ban mới được thêm vào cùng plugin này.
+Marketplace của NTL Software cho Claude và ChatGPT/Codex. Plugin **ntl** gom skill của các phòng ban trong NTL, dùng chung một bộ style NTL. Skill của phòng ban mới được thêm vào cùng plugin này.
 
 Skill hiện có:
 
@@ -16,14 +16,14 @@ Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên
 ### Claude Desktop
 
 1. Mở **Customize → Browse plugins** (hoặc **Settings → Plugins**) → **Add marketplace**.
-2. Dán link repo, xác nhận. Marketplace có tên `ntl-marketplace`.
-3. Chọn **ntl-plugin** → **Install**.
-4. Mở phiên mới. Gõ yêu cầu như "soạn proposal cho dự án X" hoặc gọi thẳng `/ntl-plugin:proposal`, `/ntl-plugin:training`.
+2. Dán link repo, xác nhận. Marketplace có tên `ntl`.
+3. Chọn **ntl** → **Install**.
+4. Mở phiên mới. Gõ yêu cầu như "soạn proposal cho dự án X" hoặc gọi thẳng `/ntl:proposal`, `/ntl:training`.
 
 ### ChatGPT / Codex Desktop
 
 1. Mở **Plugins** → **Add marketplace** (Codex: **Plugins → Marketplaces → Add**), dán link repo.
-2. Cài **ntl-plugin**. Skill dùng được trong Codex và trong ChatGPT Work trên app desktop.
+2. Cài **ntl**. Skill dùng được trong Codex và trong ChatGPT Work trên app desktop.
 3. Mở phiên mới; trong Codex gõ `/skills` để thấy `proposal`, `training`.
 
 Tên menu có thể khác một chút theo phiên bản app.
@@ -32,13 +32,14 @@ Tên menu có thể khác một chút theo phiên bản app.
 
 Người bảo trì chạy `python3 tools/pack.py` và gửi file trong `dist/`:
 
-- **Claude Cowork:** mở `ntl-plugin.plugin` trong Cowork và bấm chấp nhận.
+- **Claude Cowork:** mở `ntl.plugin` trong Cowork và bấm chấp nhận.
 - **ChatGPT Work:** **Plugins → Skills → Create → Upload**, chọn `ntl-proposal.zip` hoặc `ntl-training.zip` (mỗi file là một skill đầy đủ, đã kèm style chung).
 
 ### Cập nhật / gỡ
 
-- Cập nhật: trong app, mở marketplace `ntl-marketplace` → **Update**, rồi mở phiên mới (Claude Desktop có thể cần khởi động lại).
-- Gỡ: **Uninstall** `ntl-plugin`, rồi xoá marketplace nếu không dùng nữa.
+- Cập nhật: trong app, mở marketplace `ntl` → **Update**, rồi mở phiên mới (Claude Desktop có thể cần khởi động lại).
+- Từ bản 0.3.0 plugin và marketplace đổi mã định danh thành `ntl` (trước là `ntl-plugin` / `ntl-marketplace`): ai đã cài bản cũ cần gỡ plugin và marketplace cũ, thêm lại từ link repo rồi cài `ntl`.
+- Gỡ: **Uninstall** `ntl`, rồi xoá marketplace nếu không dùng nữa.
 
 ## Máy cần có
 
@@ -70,11 +71,11 @@ Thử bản local trước khi push:
 ```bash
 claude plugin validate .
 claude plugin marketplace add ./
-claude plugin install ntl-plugin@ntl-marketplace
+claude plugin install ntl@ntl
 codex plugin marketplace add .
-codex plugin add ntl-plugin@ntl-marketplace
+codex plugin add ntl@ntl
 ```
 
-Thử xong thì gỡ (`claude plugin uninstall …`, `claude plugin marketplace remove ntl-marketplace`, `codex plugin remove …`, `codex plugin marketplace remove ntl-marketplace`) rồi cài lại từ link GitHub. Quy tắc sửa repo ở [AGENTS.md](AGENTS.md).
+Thử xong thì gỡ (`claude plugin uninstall …`, `claude plugin marketplace remove ntl`, `codex plugin remove …`, `codex plugin marketplace remove ntl`) rồi cài lại từ link GitHub. Quy tắc sửa repo ở [AGENTS.md](AGENTS.md).
 
 Font DejaVu theo giấy phép trong `plugins/ntl-plugin/assets/fonts/LICENSE`. Template đào tạo lấy từ repo `ntl-training-hub`.

@@ -1,11 +1,11 @@
 {
-  "name": "ntl-marketplace",
+  "name": "ntl",
   "interface": {
     "displayName": "NTL"
   },
   "plugins": [
     {
-      "name": "ntl-plugin",
+      "name": "ntl",
       "source": {
         "source": "local",
         "path": "./plugins/ntl-plugin"

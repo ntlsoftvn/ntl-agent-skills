@@ -1,5 +1,5 @@
 {
-  "name": "ntl-marketplace",
+  "name": "ntl",
   "owner": {
     "name": "NTL Software"
   },
@@ -8,10 +8,10 @@
   },
   "plugins": [
     {
-      "name": "ntl-plugin",
+      "name": "ntl",
       "source": "./plugins/ntl-plugin",
       "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
-      "version": "0.2.3"
+      "version": "0.3.0"
     }
   ]
 }

@@ -4,7 +4,7 @@
     python3 tools/pack.py [--out dist]
 
 Writes
-  dist/ntl-plugin.plugin      the plugin folder as a zip (.claude-plugin/plugin.json at its root), for Claude Cowork
+  dist/ntl.plugin             the plugin folder as a zip (.claude-plugin/plugin.json at its root), for Claude Cowork
   dist/ntl-<skill>.zip        one self-contained skill per zip, for ChatGPT Work (Skills > Upload):
                               a single folder ntl-<skill>/ with the skill plus the shared references/, assets/ and
                               scripts/ copied into ntl-<skill>/common/; links and the name are rewritten to match.
@@ -67,7 +67,7 @@ def main():
     a = ap.parse_args()
     out = Path(a.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
-    p = out / "ntl-plugin.plugin"
+    p = out / "ntl.plugin"
     zip_dir(PLUGIN, p)
     print(f"✓ {p} ({p.stat().st_size / 1e6:.1f} MB)")
     for sk in sorted(d for d in (PLUGIN / "skills").iterdir() if (d / "SKILL.md").exists()):
