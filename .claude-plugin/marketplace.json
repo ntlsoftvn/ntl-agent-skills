@@ -1,0 +1,17 @@
+{
+  "name": "ntl-marketplace",
+  "owner": {
+    "name": "NTL Software"
+  },
+  "metadata": {
+    "description": "NTL Software agent skills: proposals, training material and more, in NTL style"
+  },
+  "plugins": [
+    {
+      "name": "ntl-plugin",
+      "source": "./plugins/ntl-plugin",
+      "description": "NTL Software skills (proposal decks, training material) sharing one NTL style",
+      "version": "0.1.0"
+    }
+  ]
+}

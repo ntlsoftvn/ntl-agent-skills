@@ -1,0 +1,20 @@
+{
+  "name": "ntl-marketplace",
+  "interface": {
+    "displayName": "NTL Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "ntl-plugin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ntl-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

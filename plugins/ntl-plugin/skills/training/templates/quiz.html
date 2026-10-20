@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!--
+  Template quiz tự chứa: dữ liệu, style và script nằm hết trong file này; mở trực tiếp bằng file://, không gọi mạng.
+  Quy tắc: references/quiz.md của skill training (plugin NTL).
+
+  Dùng cho một topic:
+    1. Tạo: python3 <plugin>/scripts/build_html.py init quiz <thư mục quiz>
+    2. Chỉ sửa khối <script type="application/json" id="quiz-data"> ở cuối file (và <title>). Không sửa style / script
+       trong từng quiz; sửa ở template này rồi chép lại cho mọi quiz.
+    3. Mở file kèm #check (vd .../quiz/index.html#check) để xem báo cáo ngân hàng câu hỏi: lỗi dữ liệu, số câu theo
+       từng mục tiêu so với blueprint (cần gấp 3).
+  Trong dữ liệu: chuỗi không được chứa "</script>"; SVG trong "figure" dùng nháy đơn cho thuộc tính.
+  Định dạng trong stem / options / explain: `code`, **đậm**, xuống dòng bằng \n.
+
+  Dữ liệu dưới đây là MẪU (6 câu minh hoạ), thay bằng ngân hàng thật của topic.
+-->
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz T01 · Tên topic</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --navy:#14264A; --navy2:#1F396D; --navy3:#3B5690;
+  --orange:#F16D22; --orange-text:#C9520F; --orange-tint:#FDE7D9;
+  --bg:#F1F4FA; --border:#D5DBE7; --text:#1E2637; --muted:#667085;
+  --mono:'DejaVu Sans Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{font-family:'DejaVu Sans',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:var(--text);font-size:16px;line-height:1.55;background:var(--bg)}
+body{margin:0;min-height:100vh}
+[hidden]{display:none !important}
+header.top{background:var(--navy);color:#fff;padding:14px 16px}
+header.top .in{max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+header.top .brand{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#C9D3E6}
+header.top .code{font-size:12px;color:var(--orange);font-weight:700;letter-spacing:1px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 64px}
+h1{font-size:26px;line-height:1.2;color:var(--navy2);margin:6px 0 4px}
+.rule{height:3px;width:72px;background:var(--orange);border-radius:2px;margin:10px 0 18px}
+h2{font-size:18px;color:var(--navy2);margin:28px 0 10px}
+h2::before{content:"";display:inline-block;width:10px;height:10px;background:var(--orange);border-radius:2px;margin-right:8px}
+p{margin:0 0 10px}
+b,strong{color:var(--navy)}
+code{font-family:var(--mono);font-size:.88em;background:var(--bg);color:var(--navy2);padding:1px 5px;border-radius:4px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.fact{background:#fff;border:1px solid var(--border);border-top:4px solid var(--navy2);border-radius:8px;padding:10px 12px}
+.fact .n{font-size:22px;font-weight:800;color:var(--orange);line-height:1.1}
+.fact .l{font-size:13px;color:var(--muted)}
+.note,.callout{padding:12px 14px;border-radius:0 8px 8px 0;margin:14px 0}
+.note{border-left:6px solid var(--navy2);background:#fff}
+.callout{border-left:6px solid var(--orange);background:var(--orange-tint)}
+.note .t,.callout .t{display:block;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.note .t{color:var(--navy2)} .callout .t{color:var(--orange-text)}
+.note ul,.callout ul{margin:0;padding-left:20px}
+button{font:inherit;cursor:pointer;border-radius:8px;padding:10px 18px;border:2px solid var(--navy2);background:var(--navy2);color:#fff;font-weight:700}
+button:hover{background:var(--navy)}
+button.ghost{background:#fff;color:var(--navy2)}
+button.ghost:hover{background:var(--bg)}
+button.accent{background:var(--orange);border-color:var(--orange)}
+button.accent:hover{background:var(--orange-text);border-color:var(--orange-text)}
+button:focus-visible,input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;margin:6px 0 14px}
+th{background:var(--navy2);color:#fff;text-align:left;padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--bg)}
+td.k{font-weight:700;color:var(--navy2);white-space:nowrap}
+/* thanh trạng thái khi làm bài */
+.bar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 6px rgba(20,38,74,.06)}
+.bar .in{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.bar .timer{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--navy2);min-width:72px}
+.bar .timer.low{color:var(--orange-text)}
+.bar .prog{flex:1;min-width:0}
+.bar .prog .txt{font-size:13px;color:var(--muted)}
+.bar .track{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:4px}
+.bar .fill{height:100%;width:0;background:var(--orange);transition:width .2s}
+.bar button{padding:8px 14px}
+/* câu hỏi */
+fieldset.q{min-width:0;scroll-margin-top:72px}
+.q{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;margin:14px 0}
+.q .head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin-bottom:8px}
+.q .num{font-weight:800;color:var(--orange)}
+.q .meta{font-size:12px;color:var(--muted)}
+.q .stem{margin-bottom:10px}
+.q .hint{font-size:13px;color:var(--orange-text);font-weight:700;margin-bottom:8px}
+.q figure{margin:6px 0 12px}
+.q figure svg,.q figure img{max-width:100%;height:auto;display:block}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin:6px 0;cursor:pointer;background:#fff}
+.opt:hover{border-color:var(--navy3)}
+.opt input{margin:4px 0 0;accent-color:var(--navy2);flex:none;width:18px;height:18px}
+.opt:has(input:checked){border-color:var(--navy2);background:var(--bg)}
+/* xem lại sau khi nộp */
+.opt.review{cursor:default}
+.opt.right{border-color:var(--navy2);background:var(--bg)}
+.opt.wrong{border-color:var(--orange);background:var(--orange-tint)}
+.opt .mark{flex:none;width:22px;font-weight:800;text-align:center}
+.opt.right .mark{color:var(--navy2)} .opt.wrong .mark{color:var(--orange-text)}
+.opt .tag{font-size:12px;color:var(--muted);margin-left:6px;white-space:nowrap}
+.explain{border-left:4px solid var(--navy3);padding:6px 10px;margin-top:10px;background:var(--bg);font-size:15px}
+/* kết quả */
+.score{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.score .big{font-size:40px;font-weight:800;color:var(--navy2);line-height:1}
+.verdict{font-size:14px;font-weight:800;letter-spacing:1px;padding:6px 12px;border-radius:6px;color:#fff;background:var(--navy2)}
+.verdict.fail{background:var(--orange)}
+.code-line{display:flex;gap:8px;margin:8px 0}
+.code-line input{flex:1;min-width:0;font-family:var(--mono);font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;color:var(--navy);background:#fff}
+.code-line button{padding:8px 14px}
+.bad{color:var(--orange-text);font-weight:700}
+@media (max-width:520px){
+  h1{font-size:22px}
+  .bar .in{gap:10px}
+  .bar .timer{font-size:17px;min-width:60px}
+  .score .big{font-size:32px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><span class="brand" id="brand">NTL Software · Technical Training</span><span class="code" id="hcode"></span></div></header>
+
+<!-- Màn hình bắt đầu -->
+<main id="s-start" hidden>
+  <h1 id="title"></h1>
+  <div class="muted" id="subtitle"></div>
+  <div class="rule"></div>
+  <div class="facts">
+    <div class="fact"><div class="n" id="f-n"></div><div class="l">câu hỏi</div></div>
+    <div class="fact"><div class="n" id="f-min"></div><div class="l">phút</div></div>
+    <div class="fact"><div class="n" id="f-pass"></div><div class="l">để đạt</div></div>
+  </div>
+  <div class="note"><span class="t">Cách làm</span><ul>
+    <li>Mỗi lượt ra một đề ngẫu nhiên từ ngân hàng câu hỏi; lượt sau sẽ khác.</li>
+    <li>Đồng hồ chạy khi bấm <b>Bắt đầu</b>; hết giờ bài tự nộp.</li>
+    <li>Câu có ô vuông: chọn <b>tất cả</b> đáp án đúng. Câu có ô tròn: chọn 1.</li>
+    <li>Làm một mình, <b>không dùng AI</b> hay tra cứu: quiz này để chính bạn biết mình đã nắm topic chưa.</li>
+    <li>Nộp xong, chép <b>mã kết quả</b> gửi cho mentor.</li>
+  </ul></div>
+  <div id="advice"></div>
+  <div class="actions"><button class="accent" id="btn-start">Bắt đầu</button></div>
+  <div id="history"></div>
+</main>
+
+<!-- Làm bài -->
+<div id="s-quiz" hidden>
+  <div class="bar"><div class="in">
+    <div class="timer" id="timer" aria-live="off">--:--</div>
+    <div class="prog"><div class="txt" id="prog-txt"></div><div class="track"><div class="fill" id="prog-fill"></div></div></div>
+    <button id="btn-submit">Nộp bài</button>
+  </div></div>
+  <main><form id="qform" autocomplete="off"></form>
+    <div class="actions"><button class="accent" id="btn-submit2" type="button">Nộp bài</button></div>
+  </main>
+</div>
+
+<!-- Kết quả -->
+<main id="s-result" hidden>
+  <h1 id="r-title"></h1>
+  <div class="rule"></div>
+  <div id="r-timeout"></div>
+  <div class="score">
+    <div><div class="big" id="r-pct"></div><div class="muted small" id="r-raw"></div></div>
+    <div class="verdict" id="r-verdict"></div>
+    <div class="muted small" id="r-need"></div>
+  </div>
+  <h2>Mã kết quả</h2>
+  <p class="small muted">Chép dòng này gửi cho mentor của bạn. Mã ghi lại topic, phiên bản, ngày, lượt làm, điểm và các câu sai.</p>
+  <div class="code-line"><input id="r-code" readonly aria-label="Mã kết quả"><button class="ghost" id="btn-copy" type="button">Chép</button></div>
+  <h2>Theo mục tiêu học tập</h2>
+  <p class="small muted">Mục tiêu nào chưa đạt hết thì đọc lại phần tương ứng trong handbook.</p>
+  <table><thead><tr><th>Mục tiêu</th><th>Đúng</th></tr></thead><tbody id="r-obj"></tbody></table>
+  <h2 id="r-wrong-h">Các câu chưa đúng</h2>
+  <div id="r-wrong"></div>
+  <div class="actions"><button class="accent" id="btn-again" type="button">Làm lượt mới</button><button class="ghost" id="btn-home" type="button">Về trang đầu</button></div>
+</main>
+
+<!-- Báo cáo ngân hàng câu hỏi (#check) và lỗi dữ liệu -->
+<main id="s-check" hidden></main>
+
+<script>
+(function(){
+"use strict";
+var $ = function(id){ return document.getElementById(id); };
+var D, ACTIVE, attempt = null, tick = null;
+
+/* ---------- tiện ích ---------- */
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function fmt(s){ // `code`, **đậm**, xuống dòng
+  return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/\n/g, "<br>");
+}
+function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function pad(n){ return (n < 10 ? "0" : "") + n; }
+function today(d){ d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+function mmss(sec){ sec = Math.max(0, Math.ceil(sec)); return pad(Math.floor(sec / 60)) + ":" + pad(sec % 60); }
+function shortId(id){ var m = /-(Q\d+)$/.exec(id); return m ? m[1] : id; }
+function show(id){ ["s-start","s-quiz","s-result","s-check"].forEach(function(s){ $(s).hidden = (s !== id); }); window.scrollTo(0, 0); }
+function sameSet(a, b){ if (a.length !== b.length) return false; var s = a.slice().sort().join(","); return s === b.slice().sort().join(","); }
+
+/* ---------- lịch sử trên máy (chỉ để tiện xem lại) ---------- */
+function histKey(){ return "ntl-quiz:" + D.course + "-" + D.topic + ":v" + D.version; }
+function loadHist(){ try { var h = JSON.parse(localStorage.getItem(histKey()) || "[]"); return Array.isArray(h) ? h : []; } catch (e) { return []; } }
+function saveHist(h){ try { localStorage.setItem(histKey(), JSON.stringify(h)); } catch (e) {} }
+
+/* ---------- kiểm tra dữ liệu ---------- */
+function validate(d){
+  var errors = [], warns = [], ids = {};
+  ["course","topic","version","title","passPct","minutes","blueprint","questions"].forEach(function(k){ if (d[k] === undefined) errors.push("Thiếu trường `" + k + "`."); });
+  if (errors.length) return { errors: errors, warns: warns };
+  var prefix = d.topic + "-Q";
+  d.questions.forEach(function(q, i){
+    var where = q.id ? "`" + q.id + "`" : "câu thứ " + (i + 1);
+    if (!q.id) errors.push(where + ": thiếu `id`.");
+    else if (ids[q.id]) errors.push(where + ": trùng mã."); else ids[q.id] = 1;
+    if (q.id && q.id.indexOf(prefix) !== 0) errors.push(where + ": mã phải bắt đầu bằng `" + prefix + "`.");
+    if (!q.objective) errors.push(where + ": thiếu `objective`.");
+    else if (!(q.objective in d.blueprint)) warns.push(where + ": mục tiêu `" + q.objective + "` không có trong blueprint, sẽ không bao giờ được bốc.");
+    if (q.type !== "single" && q.type !== "multi") errors.push(where + ": `type` phải là `single` hoặc `multi`.");
+    if (!q.stem) errors.push(where + ": thiếu `stem`.");
+    if (!Array.isArray(q.options) || q.options.length < 2) errors.push(where + ": cần ít nhất 2 phương án.");
+    if (!Array.isArray(q.answer) || !q.answer.length) errors.push(where + ": thiếu `answer`.");
+    else {
+      q.answer.forEach(function(a){ if (!(a >= 0 && a < (q.options || []).length)) errors.push(where + ": đáp án " + a + " ngoài danh sách phương án."); });
+      if (q.type === "single" && q.answer.length !== 1) errors.push(where + ": câu `single` phải có đúng 1 đáp án.");
+    }
+    if (!q.explain) warns.push(where + ": chưa có giải thích (`explain`).");
+  });
+  var rows = Object.keys(d.blueprint).map(function(o){
+    var need = d.blueprint[o];
+    var have = d.questions.filter(function(q){ return q.objective === o && !q.retired; }).length;
+    if (have < need) errors.push("Mục tiêu `" + o + "`: blueprint cần " + need + " câu nhưng ngân hàng chỉ có " + have + " câu đang dùng.");
+    else if (have < need * 3) warns.push("Mục tiêu `" + o + "`: ngân hàng có " + have + " câu, chuẩn cần ít nhất " + need * 3 + " (gấp 3).");
+    if (need < 2) warns.push("Mục tiêu `" + o + "`: blueprint chỉ " + need + " câu, chuẩn cần ít nhất 2.");
+    return { o: o, need: need, have: have };
+  });
+  return { errors: errors, warns: warns, rows: rows };
+}
+
+function renderCheck(v, fatal){
+  var retired = D && D.questions ? D.questions.filter(function(q){ return q.retired; }).length : 0;
+  var h = "<h1>" + (fatal ? "Quiz chưa dùng được" : "Báo cáo ngân hàng câu hỏi") + "</h1><div class='rule'></div>";
+  if (D && D.topic) h += "<p class='muted'>" + esc(D.course + "-" + D.topic) + " · v" + esc(D.version) + " · " + (D.questions || []).length + " câu trong file, " + retired + " câu ngừng dùng.</p>";
+  if (fatal) h += "<p>Dữ liệu trong khối <code>quiz-data</code> có lỗi. Người soạn cần sửa các mục dưới đây (mở file kèm <code>#check</code> để xem lại).</p>";
+  if (v.rows){
+    h += "<h2>Theo blueprint</h2><table><thead><tr><th>Mục tiêu</th><th>Mỗi đề</th><th>Ngân hàng</th><th>Cần (gấp 3)</th></tr></thead><tbody>";
+    v.rows.forEach(function(r){ h += "<tr><td class='k'>" + esc(r.o) + "</td><td>" + r.need + "</td><td" + (r.have < r.need * 3 ? " class='bad'" : "") + ">" + r.have + "</td><td>" + r.need * 3 + "</td></tr>"; });
+    h += "</tbody></table>";
+  }
+  h += "<h2>Lỗi (" + v.errors.length + ")</h2>" + (v.errors.length ? "<ul>" + v.errors.map(function(e){ return "<li>" + fmt(e) + "</li>"; }).join("") + "</ul>" : "<p class='muted'>Không có.</p>");
+  h += "<h2>Cảnh báo (" + v.warns.length + ")</h2>" + (v.warns.length ? "<ul>" + v.warns.map(function(e){ return "<li>" + fmt(e) + "</li>"; }).join("") + "</ul>" : "<p class='muted'>Không có.</p>");
+  if (!fatal) h += "<div class='actions'><button class='ghost' type='button' id='btn-leave-check'>Về trang làm bài</button></div>";
+  $("s-check").innerHTML = h;
+  show("s-check");
+  var b = $("btn-leave-check");
+  if (b) b.onclick = function(){ history.replaceState(null, "", location.pathname + location.search); renderStart(); };
+}
+
+/* ---------- màn hình bắt đầu ---------- */
+function total(){ return Object.keys(D.blueprint).reduce(function(s, o){ return s + D.blueprint[o]; }, 0); }
+function renderStart(){
+  $("f-n").textContent = total();
+  $("f-min").textContent = D.minutes;
+  $("f-pass").textContent = D.passPct + "%";
+  var h = loadHist(), adv = "";
+  if (h.length){
+    var last = h[h.length - 1], hours = (Date.now() - last.t) / 36e5;
+    var fails = h.filter(function(x){ return !x.pass; }).length;
+    if (h.some(function(x){ return x.pass; })) adv = "<div class='note'><span class='t'>Đã đạt</span>Bạn đã đạt quiz phiên bản này. Làm thêm chỉ để ôn tập.</div>";
+    else if (fails >= 3) adv = "<div class='callout'><span class='t'>Nên học lại trước</span>Bạn đã làm " + fails + " lượt chưa đạt. Khuyến nghị đọc lại handbook và làm lab trước khi làm tiếp.</div>";
+    else if (hours < 24) adv = "<div class='callout'><span class='t'>Khuyến nghị</span>Lượt trước cách đây khoảng " + Math.max(1, Math.round(hours)) + " giờ. Nên để các lượt cách nhau ít nhất 24 giờ và đọc lại các mục tiêu chưa đạt.</div>";
+  }
+  $("advice").innerHTML = adv;
+  if (h.length){
+    var rows = h.slice().reverse().map(function(x, i){ return "<tr><td>" + (h.length - i) + "</td><td>" + esc(x.date) + "</td><td>" + x.ok + "/" + x.n + " (" + x.pct + "%)</td><td>" + (x.pass ? "<b>Đạt</b>" : "<span class='bad'>Chưa đạt</span>") + "</td></tr>"; }).join("");
+    $("history").innerHTML = "<h2>Các lượt đã làm trên máy này</h2><table><thead><tr><th>Lượt</th><th>Ngày</th><th>Điểm</th><th>Kết quả</th></tr></thead><tbody>" + rows + "</tbody></table><p class='small muted'>Lịch sử chỉ lưu trong trình duyệt này; xóa dữ liệu trình duyệt thì mất.</p>";
+  } else $("history").innerHTML = "";
+  show("s-start");
+}
+
+/* ---------- bốc đề & làm bài ---------- */
+function draw(){
+  var picked = [];
+  Object.keys(D.blueprint).forEach(function(o){
+    var pool = ACTIVE.filter(function(q){ return q.objective === o; });
+    picked = picked.concat(shuffle(pool).slice(0, D.blueprint[o]));
+  });
+  return shuffle(picked).map(function(q){ return { q: q, perm: shuffle(q.options.map(function(_, i){ return i; })) }; });
+}
+
+function qHtml(item, i, review){
+  var q = item.q, multi = q.type === "multi";
+  var h = "<div class='head'><span class='num'>Câu " + (i + 1) + "</span><span class='meta'>" + esc(q.id) + " · " + esc(q.objective) + "</span></div>";
+  h += "<div class='stem'>" + fmt(q.stem) + "</div>";
+  if (q.figure) h += "<figure>" + (/^\s*<svg[\s>]/i.test(q.figure) ? q.figure : "<img alt='Hình của câu " + (i + 1) + "' src='" + esc(q.figure) + "'>") + "</figure>";
+  if (!review && multi) h += "<div class='hint'>Chọn tất cả đáp án đúng.</div>";
+  item.perm.forEach(function(oi){
+    var txt = fmt(q.options[oi]);
+    if (!review){
+      h += "<label class='opt'><input type='" + (multi ? "checkbox" : "radio") + "' name='q" + i + "' value='" + oi + "'><span>" + txt + "</span></label>";
+    } else {
+      var isAns = q.answer.indexOf(oi) >= 0, chose = item.chosen.indexOf(oi) >= 0;
+      var cls = isAns ? " right" : (chose ? " wrong" : "");
+      var mark = isAns ? "✔" : (chose ? "✗" : "");
+      var tag = chose ? "<span class='tag'>(bạn chọn)</span>" : "";
+      h += "<div class='opt review" + cls + "'><span class='mark'>" + mark + "</span><span>" + txt + tag + "</span></div>";
+    }
+  });
+  if (review){
+    if (!item.chosen.length) h += "<p class='bad small'>Bạn chưa trả lời câu này.</p>";
+    if (q.explain) h += "<div class='explain'><b>Giải thích.</b> " + fmt(q.explain) + "</div>";
+  }
+  return h;
+}
+
+function start(){
+  var items = draw();
+  attempt = { items: items, startedAt: Date.now(), endsAt: Date.now() + D.minutes * 60000 };
+  $("qform").innerHTML = items.map(function(it, i){ return "<fieldset class='q'>" + qHtml(it, i, false) + "</fieldset>"; }).join("");
+  $("qform").onchange = progress;
+  progress();
+  show("s-quiz");
+  clearInterval(tick);
+  tick = setInterval(updateTimer, 500);
+  updateTimer();
+}
+
+function chosenOf(i){
+  return Array.prototype.map.call(document.querySelectorAll("input[name='q" + i + "']:checked"), function(x){ return +x.value; });
+}
+function answered(){ return attempt.items.filter(function(_, i){ return chosenOf(i).length > 0; }).length; }
+function progress(){
+  var n = attempt.items.length, a = answered();
+  $("prog-txt").textContent = "Đã trả lời " + a + "/" + n;
+  $("prog-fill").style.width = (100 * a / n) + "%";
+}
+function updateTimer(){
+  var left = (attempt.endsAt - Date.now()) / 1000;
+  $("timer").textContent = mmss(left);
+  $("timer").classList.toggle("low", left <= 60);
+  if (left <= 0) submit(true);
+}
+
+function trySubmit(){
+  var left = attempt.items.length - answered();
+  if (left > 0 && !confirm("Còn " + left + " câu chưa trả lời. Nộp bài luôn?")) return;
+  submit(false);
+}
+
+/* ---------- chấm & kết quả ---------- */
+function submit(timedOut){
+  if (!attempt || attempt.done) return;
+  attempt.done = true;
+  clearInterval(tick);
+  var items = attempt.items, ok = 0, byObj = {};
+  items.forEach(function(it, i){
+    it.chosen = chosenOf(i);
+    it.correct = sameSet(it.chosen, it.q.answer);
+    if (it.correct) ok++;
+    var o = byObj[it.q.objective] || (byObj[it.q.objective] = { ok: 0, n: 0 });
+    o.n++; if (it.correct) o.ok++;
+  });
+  var n = items.length, pct = Math.round(100 * ok / n), pass = 100 * ok / n >= D.passPct;
+  var hist = loadHist(), turn = hist.length + 1, date = today();
+  var wrong = items.filter(function(it){ return !it.correct; });
+  var code = D.course + "-" + D.topic + " v" + D.version + " · " + date + " · lượt " + turn + " · " + ok + "/" + n + " (" + pct + "%) · " + (pass ? "ĐẠT" : "CHƯA ĐẠT") + " · sai: " + (wrong.length ? wrong.map(function(it){ return shortId(it.q.id); }).sort().join(", ") : "—");
+  hist.push({ t: Date.now(), date: date, ok: ok, n: n, pct: pct, pass: pass, wrong: wrong.map(function(it){ return it.q.id; }) });
+  saveHist(hist);
+
+  $("r-title").textContent = "Kết quả · " + D.title;
+  $("r-timeout").innerHTML = timedOut ? "<div class='callout'><span class='t'>Hết giờ</span>Bài đã tự nộp khi hết thời gian. Câu chưa trả lời tính là sai.</div>" : "";
+  $("r-pct").textContent = pct + "%";
+  $("r-raw").textContent = ok + "/" + n + " câu đúng · lượt " + turn;
+  $("r-verdict").textContent = pass ? "ĐẠT" : "CHƯA ĐẠT";
+  $("r-verdict").className = "verdict" + (pass ? "" : " fail");
+  $("r-need").textContent = "Ngưỡng đạt: " + D.passPct + "%";
+  $("r-code").value = code;
+  $("r-obj").innerHTML = Object.keys(D.blueprint).filter(function(o){ return byObj[o]; }).map(function(o){
+    var r = byObj[o]; return "<tr><td class='k'>" + esc(o) + "</td><td" + (r.ok < r.n ? " class='bad'" : "") + ">" + r.ok + "/" + r.n + "</td></tr>";
+  }).join("");
+  $("r-wrong-h").hidden = !wrong.length;
+  $("r-wrong").innerHTML = wrong.length ? wrong.map(function(it){ return "<div class='q'>" + qHtml(it, items.indexOf(it), true) + "</div>"; }).join("") : "";
+  if (!wrong.length) $("r-wrong").innerHTML = "<div class='note'><span class='t'>Tuyệt đối</span>Bạn trả lời đúng mọi câu của lượt này.</div>";
+  show("s-result");
+}
+
+function copyCode(){
+  var inp = $("r-code"), done = function(){ $("btn-copy").textContent = "Đã chép"; setTimeout(function(){ $("btn-copy").textContent = "Chép"; }, 1500); };
+  inp.select();
+  try { if (navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(inp.value).then(done, function(){ if (document.execCommand("copy")) done(); }); return; } } catch (e) {}
+  try { if (document.execCommand("copy")) done(); } catch (e) {}
+}
+
+/* ---------- khởi động ---------- */
+function init(){
+  try { D = JSON.parse($("quiz-data").textContent); }
+  catch (e) { D = null; renderCheck({ errors: ["Khối `quiz-data` không phải JSON hợp lệ: " + e.message], warns: [] }, true); return; }
+  var v = validate(D);
+  document.title = "Quiz " + D.topic + " · " + D.title;
+  $("hcode").textContent = D.course + "-" + D.topic + " · v" + D.version;
+  if (D.courseName) $("brand").textContent = "NTL Software · " + D.courseName;
+  if (v.errors.length){ renderCheck(v, true); return; }
+  ACTIVE = D.questions.filter(function(q){ return !q.retired; });
+  $("title").textContent = "Quiz · " + D.title;
+  $("subtitle").textContent = "Topic " + D.topic + " · phiên bản " + D.version;
+  $("btn-start").onclick = start;
+  $("btn-submit").onclick = trySubmit;
+  $("btn-submit2").onclick = trySubmit;
+  $("btn-again").onclick = start;
+  $("btn-home").onclick = renderStart;
+  $("btn-copy").onclick = copyCode;
+  $("qform").onsubmit = function(e){ e.preventDefault(); };
+  window.addEventListener("beforeunload", function(e){ if (attempt && !attempt.done && !$("s-quiz").hidden){ e.preventDefault(); e.returnValue = ""; } });
+  if (location.hash === "#check") renderCheck(v, false); else renderStart();
+}
+document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+
+<!-- ======================= DỮ LIỆU QUIZ (chỉ sửa phần này) ======================= -->
+<script type="application/json" id="quiz-data">
+{
+  "course": "DEMO101",
+  "courseName": "Tên khóa học 101",
+  "topic": "T01",
+  "version": "1.0",
+  "title": "Tên topic",
+  "passPct": 80,
+  "minutes": 10,
+  "blueprint": {
+    "T01.1": 2
+  },
+  "questions": [
+    {
+      "id": "T01-Q001",
+      "objective": "T01.1",
+      "type": "single",
+      "stem": "Câu hỏi một đáp án: chọn **một** phương án đúng.",
+      "options": [
+        "Phương án đúng",
+        "Phương án sai 1",
+        "Phương án sai 2",
+        "Phương án sai 3"
+      ],
+      "answer": [
+        0
+      ],
+      "explain": "Giải thích vì sao phương án đúng là đúng và vì sao các phương án còn lại sai."
+    },
+    {
+      "id": "T01-Q002",
+      "objective": "T01.1",
+      "type": "multi",
+      "stem": "Câu hỏi nhiều đáp án: chọn **mọi** phương án đúng. (chọn nhiều)",
+      "options": [
+        "Đúng A",
+        "Sai B",
+        "Đúng C",
+        "Sai D"
+      ],
+      "answer": [
+        0,
+        2
+      ],
+      "explain": "Nêu lý do cho từng phương án đúng; câu nhiều đáp án chỉ được điểm khi chọn đủ và không chọn thừa."
+    },
+    {
+      "id": "T01-Q003",
+      "objective": "T01.1",
+      "type": "single",
+      "stem": "Câu hỏi tình huống: mô tả ngắn bối cảnh, rồi hỏi cách làm đúng là gì?",
+      "options": [
+        "Cách làm sai thường gặp",
+        "Cách làm đúng, dựa trên nội dung handbook",
+        "Cách làm nghe hợp lý nhưng thiếu bước",
+        "Cách làm không liên quan"
+      ],
+      "answer": [
+        1
+      ],
+      "explain": "Liên hệ với mục tiêu T01.1 và chương tương ứng trong handbook."
+    },
+    {
+      "id": "T01-Q004",
+      "objective": "T01.1",
+      "type": "single",
+      "stem": "Câu hỏi mẫu 4: mỗi mục tiêu cần ngân hàng gấp 3 số câu trong một đề.",
+      "options": [
+        "Phương án đúng",
+        "Phương án sai 1",
+        "Phương án sai 2",
+        "Phương án sai 3"
+      ],
+      "answer": [
+        0
+      ],
+      "explain": "Giải thích ngắn, chỉ về phần handbook liên quan."
+    },
+    {
+      "id": "T01-Q005",
+      "objective": "T01.1",
+      "type": "single",
+      "stem": "Câu hỏi mẫu 5: mỗi mục tiêu cần ngân hàng gấp 3 số câu trong một đề.",
+      "options": [
+        "Phương án đúng",
+        "Phương án sai 1",
+        "Phương án sai 2",
+        "Phương án sai 3"
+      ],
+      "answer": [
+        0
+      ],
+      "explain": "Giải thích ngắn, chỉ về phần handbook liên quan."
+    },
+    {
+      "id": "T01-Q006",
+      "objective": "T01.1",
+      "type": "single",
+      "stem": "Câu hỏi mẫu 6: mỗi mục tiêu cần ngân hàng gấp 3 số câu trong một đề.",
+      "options": [
+        "Phương án đúng",
+        "Phương án sai 1",
+        "Phương án sai 2",
+        "Phương án sai 3"
+      ],
+      "answer": [
+        0
+      ],
+      "explain": "Giải thích ngắn, chỉ về phần handbook liên quan."
+    }
+  ]
+}
+</script>
+</body>
+</html>

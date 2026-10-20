@@ -1,0 +1,5 @@
+<svg viewBox="0 0 500 90" xmlns="http://www.w3.org/2000/svg" font-family="DejaVu Sans, sans-serif" font-size="11">
+    <rect x="10" y="25" width="130" height="40" rx="6" fill="#1F396D"/><text x="75" y="49" fill="#fff" text-anchor="middle" font-weight="700">Bước 1</text>
+    <path d="M140 45H180" stroke="#1F396D" stroke-width="1.6"/>
+    <rect x="180" y="25" width="130" height="40" rx="6" fill="#F16D22"/><text x="245" y="49" fill="#fff" text-anchor="middle" font-weight="700">Bước 2 (nhấn)</text>
+  </svg>

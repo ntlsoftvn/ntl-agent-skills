@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<!-- =====================================================================
+  TEMPLATE HANDBOOK CỦA MỘT TOPIC (dùng chung mọi khóa học).
+  Tạo:   python3 <plugin>/scripts/build_html.py init handbook <thư mục topic>
+  Sửa:   tên topic (<title>, --footer-text, cover), người soạn, nội dung. Không sửa ntl-assets/style.css.
+  Mục lục: mỗi <span class="pg" data-find="…"> khớp chữ hiển thị ở đầu trang chương
+  (chnum viết hoa, vd "CHƯƠNG 1"); bước build tự điền số trang:
+         python3 <plugin>/scripts/build_html.py pdf index.html --name NTL-<COURSE>-<TOPIC>-Handbook
+  Khối .layers trên cover là tuỳ chọn (xoá nếu khóa học không chia tầng).
+  ===================================================================== -->
+<title>Tên khóa học — Topic NN</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>:root{--footer-text:"Tên khóa học  ·  Topic NN  ·  <Tên topic>"}</style>
+</head>
+<body>
+
+<!-- ============ 1. COVER (class "on" = layer mà topic này tập trung) ============ -->
+<section class="cover">
+  <img class="tri" src="../assets/cover-tri.svg" alt="">
+  <div class="brand">NTL SOFTWARE<br>TECHNICAL TRAINING COURSE</div>
+  <div class="head">
+    <span class="topic">TOPIC NN</span>
+    <div class="title">Tên<br>khóa học <span>101</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">Tên topic<br>&amp; phụ đề</div>
+  </div>
+  <div class="layers">
+    <div>Tầng 1</div>
+    <div class="on">Tầng 2 (topic này tập trung)</div>
+    <div>Tầng 3</div>
+    <div>Tầng 4</div>
+  </div>
+  <div class="meta"><b>Phiên bản 1.0</b> · Tháng MM/YYYY<br>Biên soạn: &lt;Người soạn&gt;</div>
+</section>
+
+<!-- ============ 2. MỤC LỤC ============ -->
+<div class="page"><span class="chnum">Handbook</span><h1 class="ch">Mục lục</h1><div class="chrule"></div>
+<ul class="toc">
+  <li><span class="num"></span><span class="tt">Giới thiệu topic &amp; cách đọc</span><span class="pg" data-find="GIỚI THIỆU">3</span></li>
+  <li><span class="num">1</span><span class="tt">Tên chương 1<span class="sub">Ý chính · ý chính</span></span><span class="pg" data-find="CHƯƠNG 1">4</span></li>
+  <li><span class="num">A</span><span class="tt">Phụ lục — Glossary &amp; checklist</span><span class="pg" data-find="PHỤ LỤC">5</span></li>
+</ul>
+<div class="note" style="margin-top:8mm"><span class="t">Gợi ý đọc nhanh</span><p>Có 45 phút: đọc Chương 1–N. Cần tra cứu: Chương X.</p></div>
+</div>
+
+<!-- ============ 3. GIỚI THIỆU ============ -->
+<div class="page"><span class="chnum">Giới thiệu</span><h1 class="ch">Về topic “Tên topic”</h1><div class="chrule"></div>
+<p class="lead">Đoạn dẫn (lead) 2–3 dòng: topic này đảm nhận phần nào của khóa học; nó trả lời câu hỏi gì.</p>
+<div class="cols3">
+  <div class="card"><div class="n">01</div><h4>Mục tiêu</h4><p>Nội dung <b>nhấn mạnh</b>.</p></div>
+  <div class="card o"><div class="n">02</div><h4>Đối tượng</h4><p>…</p></div>
+  <div class="card"><div class="n">03</div><h4>Cách đọc</h4><p>…</p></div>
+</div>
+<h2>Quy ước trong tài liệu</h2>
+<table>
+  <tr><th style="width:26%">Ký hiệu</th><th>Ý nghĩa</th></tr>
+  <tr><td><span class="badge b0">P0</span></td><td><b>Bắt buộc / nền tảng</b> — thiếu thì khó đưa sản phẩm AI vào chạy thật.</td></tr>
+  <tr><td><span class="badge b1">P1</span></td><td><b>Cần cho dự án thực tế</b> — sớm muộn cũng gặp.</td></tr>
+  <tr><td><span class="badge b2">P2</span></td><td><b>Mở rộng / chuyên sâu</b> — học khi có nhu cầu.</td></tr>
+  <tr><td><span class="chip">tên-công-cụ</span></td><td>Công cụ, thư viện, sản phẩm tiêu biểu.</td></tr>
+  <tr><td><a class="kw" href="#glossary">keyword</a></td><td>Thuật ngữ nên nhớ; bấm để tới mục giải thích trong Glossary.</td></tr>
+</table>
+<div class="note"><span class="t">Lưu ý về thời điểm</span><p>Nội dung được tổng hợp đến <b>MM/YYYY</b>. …</p></div>
+</div>
+
+<!-- ============ 4. CHƯƠNG MẪU (mọi thành phần) ============ -->
+<div class="page"><span class="chnum">Chương 1</span><h1 class="ch">Tên chương, tối đa hai dòng</h1><div class="chrule"></div>
+<p class="lead">Đoạn lead mở chương: nêu câu hỏi chương này trả lời.</p>
+
+<h2>1.1 Tiêu đề mục (H2, ô vuông cam) <span class="badge b1">P1</span></h2>
+<p>Đoạn thân bài 9.2pt. Dùng <b>chữ đậm</b> để nhấn ý chính, <i>nghiêng</i> cho câu hỏi/ẩn dụ, <code>inline_code</code> cho tên biến; thuật ngữ nên nhớ dùng <a class="kw" href="#gl-vi-du">keyword liên kết</a> (id đích ở dòng Glossary bên dưới).</p>
+<h3>Tiêu đề nhỏ (H3)</h3>
+<ul><li>Gạch đầu dòng thứ nhất.</li><li>Mục thứ hai.</li></ul>
+
+<!-- Sơ đồ: file assets/fig-NN.svg (NN = số Hình), tham chiếu bằng <img class="dia">; build.py nhúng vào lúc build để chữ dùng DejaVu của trang. Hình dùng chung mọi handbook để ở assets/ gốc. Palette: navy #1F396D/#14264A, cam #F16D22, nền #F1F4FA, viền #D5DBE7 -->
+<figure class="fig">
+  <img class="dia" src="assets/fig-01.svg" alt="Hình 1">
+  <figcaption><b>Hình 1.</b> Chú thích hình: một câu nêu điều cần nhìn thấy.</figcaption>
+</figure>
+
+<table>
+  <tr><th style="width:26%">Cột 1</th><th>Cột 2</th><th>Cột 3</th></tr>
+  <tr><td class="k">Hàng 1</td><td>Nội dung</td><td>Nội dung</td></tr>
+  <tr><td class="k">Hàng 2</td><td>Nội dung</td><td>Nội dung</td></tr>
+</table>
+
+<div class="cols2">
+  <div class="note"><span class="t">Gợi ý</span><p>Callout xanh: mẹo, tóm tắt, hướng đọc.</p></div>
+  <div class="callout"><span class="t">Nguyên tắc / Cạm bẫy</span><p>Callout cam: cảnh báo, nguyên tắc cốt lõi.</p></div>
+</div>
+
+<div class="note"><span class="t">Công thức</span><p><code>chi_phí = token_vào × giá_vào + token_ra × giá_ra</code></p></div>
+
+<pre class="code"><span class="c"># Python — ví dụ</span>
+from openai import OpenAI
+client = OpenAI()
+resp = client.chat.completions.create(model="&lt;model&gt;", messages=[...])</pre>
+
+<div class="chips"><span class="chip">LiteLLM</span><span class="chip">OpenRouter</span><span class="chip o">Ưu tiên</span></div>
+<p class="small">Chú thích nhỏ / nguồn.</p>
+</div>
+
+<!-- ============ 5. PHỤ LỤC ============ -->
+<div class="page"><span class="chnum">Phụ lục</span><h1 class="ch" id="glossary">Glossary &amp; checklist</h1>
+<table class="gloss"><tr id="gl-vi-du"><td>Ví dụ</td><td>Mỗi dòng Glossary có <code>id="gl-…"</code> (slug ASCII của thuật ngữ) để chip keyword trỏ tới. Bước build cảnh báo nếu liên kết #anchor không có đích.</td></tr></table><div class="chrule"></div>
+<div class="cols2">
+  <div class="card"><h4>Chất lượng</h4><ul><li>Mục kiểm tra 1</li><li>Mục kiểm tra 2</li></ul></div>
+  <div class="card o"><h4>An toàn &amp; bảo mật</h4><ul><li>Mục kiểm tra 1</li></ul></div>
+</div>
+<h2>Nguồn &amp; đọc thêm</h2>
+<p class="small">Toàn bộ tên sản phẩm là thương hiệu của chủ sở hữu tương ứng; danh sách công cụ mang tính đại diện, không phải xếp hạng hay khuyến nghị.</p>
+</div>
+
+</body>
+</html>

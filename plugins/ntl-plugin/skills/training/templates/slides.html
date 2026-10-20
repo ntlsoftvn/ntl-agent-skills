@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!--
+  Template slide trình chiếu: 1 file, style + script nằm trong file, không CDN, không gọi mạng.
+  Khung 16:9 (1280×720) tự co giãn theo cửa sổ.
+
+  Dùng cho một workshop / topic:
+    1. Tạo: python3 <plugin>/scripts/build_html.py init slides <thư mục slides>
+       Ảnh chụp, sơ đồ để trong assets/ cạnh file (shot-NN.png, fig-NN.svg).
+    2. Sửa <title>, --footer-text, slide cover (giữ dòng <b>Phiên bản Y.Z</b>: build lấy phiên bản từ đây) rồi viết các
+       <section class="slide">. Mỗi slide một ý; lời dẫn để trong <aside class="notes"> cuối slide.
+       Không sửa style / script trong từng bộ slide.
+    3. python3 <plugin>/scripts/build_html.py slides index.html --name NTL-Workshop-<Title>-Slides
+       (topic của khóa học: --name NTL-<COURSE>-<TOPIC>-Slides) -> <name>-vY.Z.html + .pdf:
+       HTML đã nhúng ảnh, SVG và font DejaVu (gửi đi hoặc trình chiếu offline), PDF mỗi slide 1 trang.
+       Mở file nguồn trực tiếp thì chữ dùng font hệ thống; xem bố cục cuối cùng ở bản build.
+
+  Phím: ← → / Space / PageUp PageDown chuyển slide · Home End · N lời dẫn · F toàn màn hình. #5 trên URL mở slide 5.
+
+  Các slide dưới đây là MẪU: mỗi slide minh hoạ một layout / component. Chép layout cần dùng, xoá phần còn lại.
+-->
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template slide NTL</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --navy:#14264A; --navy2:#1F396D; --navy3:#3B5690;
+  --orange:#F16D22; --orange-text:#C9520F; --orange-tint:#FDE7D9;
+  --bg:#F1F4FA; --border:#D5DBE7; --text:#1E2637; --muted:#667085;
+  --sans:'DejaVu Sans',-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --mono:'Mono VN','DejaVu Sans Mono','DejaVu Sans',ui-monospace,Menlo,Consolas,monospace;
+  --footer-text:"NTL Software  ·  Template slide";
+  --W:1280px; --H:720px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#0E1830;font-family:var(--sans);color:var(--text);overflow:hidden}
+[hidden]{display:none !important}
+
+/* ---------- Sân khấu: slide 1280×720, JS co giãn bằng --scale ---------- */
+.deck{position:fixed;left:50%;top:var(--top,50%);width:var(--W);height:var(--H);
+  transform:translate(-50%,-50%) scale(var(--scale,1));transform-origin:center}
+.slide{position:absolute;inset:0;background:#fff;padding:64px 80px 72px;display:none;flex-direction:column;overflow:hidden;
+  font-size:24px;line-height:1.45}
+.slide.on{display:flex}
+.slide > .notes{display:none}
+
+/* Chân slide: --footer-text bên trái, số trang cam đậm bên phải (không có ở cover) */
+.slide::after{content:var(--footer-text);position:absolute;left:80px;bottom:26px;font-size:13px;color:var(--muted);letter-spacing:.3px}
+.slide .pn{position:absolute;right:80px;bottom:24px;font-size:15px;font-weight:700;color:var(--orange)}
+.slide.cover::after,.slide.cover .pn,.slide.section::after{display:none}
+
+/* ---------- Chữ ---------- */
+h1,h2,h3{margin:0;color:var(--navy2);line-height:1.18}
+h2{font-size:38px;margin-bottom:8px}
+h2 + .rule,.rule{height:4px;width:84px;background:var(--orange);border-radius:2px;margin:10px 0 28px;flex:none}
+h3{font-size:26px;margin:0 0 10px}
+p{margin:0 0 14px}
+b,strong{color:var(--navy)}
+em{color:var(--orange-text);font-style:normal;font-weight:700}
+.lead{font-size:28px;color:var(--navy3)}
+.muted{color:var(--muted)}
+.small{font-size:19px}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg);color:var(--navy2);padding:1px 7px;border-radius:5px}
+ul,ol{margin:0 0 14px;padding-left:1.2em}
+li{margin:0 0 10px}
+li::marker{color:var(--orange);font-weight:700}
+.grow{flex:1;min-height:0}
+.center{display:flex;flex-direction:column;justify-content:center}
+
+/* ---------- Cover ---------- */
+.slide.cover{background:var(--navy);color:#fff;padding:0;justify-content:center}
+.cover .in{padding:0 96px;position:relative;z-index:1}
+.cover .brand{font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#C9D3E6;margin-bottom:22px}
+.cover h1{font-size:58px;color:#fff;max-width:960px}
+.cover .rule{margin:26px 0 22px;width:110px}
+.cover .sub{font-size:28px;color:#DCE3F0;max-width:900px}
+.cover .meta{position:absolute;left:96px;bottom:56px;font-size:16px;color:#C9D3E6}
+.cover .meta b{color:#fff}
+.cover .tri{position:absolute;right:-60px;top:-60px;width:420px;height:420px;background:var(--orange);opacity:.9;
+  clip-path:polygon(100% 0,100% 100%,0 0)}
+.cover .tri2{position:absolute;right:0;bottom:0;width:260px;height:260px;background:var(--navy3);
+  clip-path:polygon(100% 0,100% 100%,0 100%)}
+
+/* ---------- Section (chuyển phần) ---------- */
+.slide.section{background:var(--bg);justify-content:center}
+.section .num{font-size:120px;font-weight:700;color:var(--orange);line-height:1}
+.section h2{font-size:52px;margin-top:8px}
+
+/* ---------- Khối ---------- */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--bg);border:1px solid var(--border);border-top:6px solid var(--navy2);border-radius:12px;padding:22px 26px}
+.card.o{border-top-color:var(--orange)}
+.card h3{font-size:26px}
+.card ul{margin:0}
+.note{background:#E9EEF7;border-left:6px solid var(--navy2);border-radius:8px;padding:16px 22px;font-size:21px}
+.callout{background:var(--orange-tint);border-left:6px solid var(--orange);border-radius:8px;padding:16px 22px;font-size:22px}
+.callout b{color:var(--orange-text)}
+blockquote.quote{margin:0;padding:8px 0 8px 32px;border-left:6px solid var(--orange);font-size:30px;line-height:1.4;color:var(--navy2)}
+blockquote.quote cite{display:block;margin-top:14px;font-size:19px;font-style:normal;color:var(--muted)}
+.big{font-size:96px;font-weight:700;color:var(--orange);line-height:1}
+.big + p{font-size:26px;color:var(--navy3)}
+.chip{display:inline-block;font-size:17px;font-weight:700;padding:3px 12px;border-radius:999px;background:#E9EEF7;color:var(--navy2)}
+.chip.o{background:var(--orange-tint);color:var(--orange-text)}
+
+/* Bảng */
+table{border-collapse:collapse;width:100%;font-size:20px}
+th{background:var(--navy2);color:#fff;text-align:left;font-weight:700;padding:10px 14px}
+td{border-bottom:1px solid var(--border);padding:10px 14px;vertical-align:top}
+td.k{font-weight:700;color:var(--navy2);white-space:nowrap}
+td.c,th.c{text-align:center}
+
+/* Các bước ngang (quy trình, bậc thang) */
+.steps{display:flex;gap:14px;counter-reset:st;margin:8px 0 24px}
+.steps > div{flex:1;counter-increment:st;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px 18px 18px;
+  font-size:20px;position:relative}
+.steps > div::before{content:counter(st);display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;
+  background:var(--navy2);color:#fff;font-weight:700;font-size:20px;margin-bottom:12px}
+.steps > div.hl{border-color:var(--orange);background:var(--orange-tint)}
+.steps > div.hl::before{background:var(--orange)}
+.steps b{display:block;font-size:22px;margin-bottom:4px}
+
+/* Checklist */
+ul.check{list-style:none;padding:0}
+ul.check li{padding-left:44px;position:relative}
+ul.check li::before{content:"";position:absolute;left:0;top:4px;width:26px;height:26px;border:3px solid var(--orange);border-radius:6px}
+ul.check li.done::before{background:var(--orange);box-shadow:inset 0 0 0 4px #fff}
+
+/* Prompt mẫu (chữ người dùng gõ cho AI) */
+pre.prompt{margin:0 0 16px;font-family:var(--mono);font-size:19px;line-height:1.5;white-space:pre-wrap;background:#14264A;color:#E9EEF7;
+  border-radius:10px;padding:20px 24px;border-left:8px solid var(--orange)}
+pre.prompt .at{color:#FFB37E;font-weight:700}
+
+/* Sơ đồ (SVG) và ảnh chụp màn hình */
+figure{margin:0;display:flex;flex-direction:column;align-items:center;min-height:0}
+figure .dia{width:100%;height:auto;max-height:440px}
+figure.shot img{max-width:100%;max-height:440px;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(20,38,74,.16)}
+figure .ph{width:100%;height:380px;border:3px dashed var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:22px;background:var(--bg)}
+figcaption{margin-top:12px;font-size:17px;color:var(--muted);text-align:center}
+figcaption b{color:var(--navy2)}
+
+/* Kết / Q&A */
+.slide.end{background:var(--navy);color:#fff;justify-content:center;align-items:center;text-align:center}
+.end h2{color:#fff;font-size:64px}
+.end .rule{margin:22px auto}
+.end p{color:#DCE3F0;font-size:26px}
+.slide.end::after{color:#C9D3E6}
+
+/* ---------- Thanh điều khiển + lời dẫn (chỉ trên màn hình) ---------- */
+.bar{position:fixed;right:14px;bottom:10px;display:flex;gap:6px;align-items:center;font:13px/1 var(--sans);color:#C9D3E6;z-index:5;opacity:.25;transition:opacity .2s}
+.bar:hover{opacity:1}
+.bar button{font:inherit;background:#22325A;color:#fff;border:0;border-radius:6px;padding:7px 11px;cursor:pointer}
+.bar button:hover{background:var(--orange)}
+#notes{position:fixed;left:0;right:0;bottom:0;height:30vh;overflow:auto;background:#0B1326;color:#E9EEF7;border-top:3px solid var(--orange);
+  padding:14px max(16px,4vw) 44px;font:17px/1.55 var(--sans)}
+#notes .h{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#FFB37E;margin-bottom:6px}
+#notes p{margin:0 0 8px}
+
+/* ---------- In / PDF: mỗi slide 1 trang 16:9 ---------- */
+@page{size:1280px 720px;margin:0}
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff}
+  .deck{position:static;transform:none;width:var(--W);height:auto}
+  .slide{position:relative;display:flex !important;width:var(--W);height:var(--H);break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .bar,#notes{display:none !important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<main class="deck">
+
+<!-- 1. Cover: brand · tiêu đề · phụ đề · meta (giữ <b>Phiên bản Y.Z</b> để build đặt tên file) -->
+<section class="slide cover">
+  <div class="tri"></div><div class="tri2"></div>
+  <div class="in">
+    <div class="brand">NTL Software · Workshop</div>
+    <h1>Tiêu đề buổi trình bày, ngắn gọn trong 2 dòng</h1>
+    <div class="rule"></div>
+    <div class="sub">Phụ đề: một câu nói rõ người nghe được gì sau buổi này</div>
+  </div>
+  <div class="meta"><b>Phiên bản 1.0</b> · 10/2026 · Người trình bày</div>
+  <aside class="notes"><p>Lời dẫn cho slide này. Bấm <b>N</b> để hiện/ẩn khi trình chiếu. Không in vào PDF.</p></aside>
+</section>
+
+<!-- 2. Bullet: tiêu đề + rule + danh sách (tối đa ~6 ý, mỗi ý 1 dòng) -->
+<section class="slide">
+  <h2>Nội dung buổi hôm nay</h2><div class="rule"></div>
+  <p class="lead">Một câu dẫn ngắn đặt bối cảnh cho cả slide.</p>
+  <ol>
+    <li><b>Ý thứ nhất</b>: giải thích ngắn trong một dòng</li>
+    <li><b>Ý thứ hai</b>: dùng <em>chữ cam đậm</em> cho từ khoá cần nhấn</li>
+    <li><b>Ý thứ ba</b>: thuật ngữ như <code>@skill</code> dùng font mono</li>
+  </ol>
+  <aside class="notes"><p>Mỗi slide chỉ một ý chính. Ý phụ để vào lời dẫn.</p></aside>
+</section>
+
+<!-- 3. Section: chuyển sang phần mới -->
+<section class="slide section">
+  <div class="num">01</div>
+  <h2>Tên phần</h2>
+  <p class="lead">Một câu giới thiệu phần này.</p>
+</section>
+
+<!-- 4. Hai cột so sánh: .cols2 + .card (.card.o = cột nhấn, viền cam) -->
+<section class="slide">
+  <h2>So sánh hai lựa chọn</h2><div class="rule"></div>
+  <div class="cols2">
+    <div class="card">
+      <h3>Lựa chọn A</h3>
+      <ul><li>Dùng khi …</li><li>Ưu điểm …</li><li>Hạn chế …</li></ul>
+    </div>
+    <div class="card o">
+      <h3>Lựa chọn B</h3>
+      <ul><li>Dùng khi …</li><li>Ưu điểm …</li><li>Hạn chế …</li></ul>
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:22px">Ghi chú nhỏ dưới bảng so sánh: <span class="chip">chip xanh</span> <span class="chip o">chip cam</span></p>
+</section>
+
+<!-- 5. Sơ đồ: figure > img.dia trỏ tới assets/fig-NN.svg (build nhúng SVG vào HTML) -->
+<section class="slide">
+  <h2>Sơ đồ</h2><div class="rule"></div>
+  <figure class="grow center">
+    <img class="dia" src="assets/fig-01.svg" alt="Hình 1">
+    <figcaption><b>Hình 1.</b> Một câu nói người nghe cần thấy gì trong sơ đồ.</figcaption>
+  </figure>
+  <aside class="notes"><p>Sơ đồ cho slide vẽ theo references/diagrams.md của skill ntl-training-docs; viewBox rộng 700–1100, chữ ≥ 14 để đọc được trên máy chiếu.</p></aside>
+</section>
+
+<!-- 6. Ảnh chụp màn hình: figure.shot > img trỏ tới assets/shot-NN.png (build nhúng thành data URI).
+        Khi chưa có ảnh: div.ph giữ chỗ. -->
+<section class="slide">
+  <h2>Ảnh chụp màn hình + prompt</h2><div class="rule"></div>
+  <div class="cols2 grow">
+    <div>
+      <pre class="prompt">Dùng <span class="at">@Google Drive</span> đọc sheet "…"
+và <span class="at">@Slack</span> tìm tin nhắn tuần này.
+Chưa gửi gì, cho tôi xem trước.</pre>
+      <p class="small">Prompt mẫu: <code>pre.prompt</code>, phần <code>@app</code> / <code>@skill</code> bọc <code>span.at</code>.</p>
+    </div>
+    <figure class="shot">
+      <div class="ph">assets/shot-01.png</div>
+      <figcaption>Chú thích ảnh: điều cần nhìn thấy.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 7. Các bước ngang: .steps > div (div.hl = bước nhấn) -->
+<section class="slide">
+  <h2>Quy trình 5 bước</h2><div class="rule"></div>
+  <div class="steps">
+    <div><b>Bước 1</b>mô tả ngắn</div>
+    <div><b>Bước 2</b>mô tả ngắn</div>
+    <div class="hl"><b>Bước 3</b>bước cần nhấn</div>
+    <div><b>Bước 4</b>mô tả ngắn</div>
+    <div><b>Bước 5</b>mô tả ngắn</div>
+  </div>
+  <div class="note"><b>Ghi chú (.note):</b> mẹo, tóm tắt.</div>
+  <div class="callout" style="margin-top:14px"><b>Lưu ý (.callout):</b> nguyên tắc, cạm bẫy thường gặp.</div>
+</section>
+
+<!-- 8. Bảng: th nền navy, td.k = cột khoá, td.c = căn giữa -->
+<section class="slide">
+  <h2>Bảng</h2><div class="rule"></div>
+  <table>
+    <tr><th>Việc</th><th class="c">Tuần 1</th><th class="c">Tuần 2</th><th>Ghi chú</th></tr>
+    <tr><td class="k">Việc A</td><td class="c">✔</td><td class="c">✔</td><td>lặp lại</td></tr>
+    <tr><td class="k">Việc B</td><td class="c">✔</td><td class="c">✔</td><td>lặp lại</td></tr>
+    <tr><td class="k">Việc C</td><td class="c">✔</td><td class="c">—</td><td class="muted">chỉ một lần</td></tr>
+  </table>
+</section>
+
+<!-- 9. Trích dẫn / con số lớn -->
+<section class="slide">
+  <div class="cols2 grow" style="align-items:center">
+    <blockquote class="quote">Một câu đáng nhớ, tối đa 2–3 dòng, đặt ở giữa slide.<cite>— nguồn hoặc người nói</cite></blockquote>
+    <div><div class="big">40'</div><p>một con số lớn kèm 1 dòng giải thích</p></div>
+  </div>
+</section>
+
+<!-- 10. Checklist: ul.check (li.done = đã đánh dấu) -->
+<section class="slide">
+  <h2>Checklist</h2><div class="rule"></div>
+  <ul class="check">
+    <li class="done">Mục đã đạt</li>
+    <li>Mục cần làm</li>
+    <li>Mục cần làm</li>
+  </ul>
+</section>
+
+<!-- 11. Kết / Q&A -->
+<section class="slide end">
+  <h2>Hỏi &amp; đáp</h2>
+  <div class="rule"></div>
+  <p>Một dòng kết: việc người nghe nên làm ngay sau buổi</p>
+</section>
+
+</main>
+
+<div class="bar" aria-label="Điều khiển">
+  <button type="button" data-go="-1" title="Slide trước (←)">‹</button>
+  <span id="pos">1 / 1</span>
+  <button type="button" data-go="1" title="Slide sau (→)">›</button>
+  <button type="button" id="bn" title="Lời dẫn (N)">N</button>
+  <button type="button" id="bf" title="Toàn màn hình (F)">F</button>
+</div>
+<div id="notes" hidden><div class="h">Lời dẫn</div><div id="notes-body"></div></div>
+
+<script>
+(function(){
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var n = slides.length, cur = 0;
+  var deck = document.querySelector('.deck'), notes = document.getElementById('notes');
+  var body = document.getElementById('notes-body'), pos = document.getElementById('pos');
+
+  // Số trang cho mọi slide (cả khi in PDF)
+  slides.forEach(function(s, i){
+    var p = document.createElement('div'); p.className = 'pn'; p.textContent = (i + 1) + ' / ' + n; s.appendChild(p);
+  });
+
+  function fit(){
+    var W = 1280, H = 720, avail = window.innerHeight - (notes.hidden ? 0 : notes.offsetHeight);
+    var s = Math.min(window.innerWidth / W, avail / H);
+    deck.style.setProperty('--scale', s);
+    deck.style.setProperty('--top', (avail / 2) + 'px');
+  }
+  function show(i){
+    cur = Math.max(0, Math.min(n - 1, i));
+    slides.forEach(function(s, k){ s.classList.toggle('on', k === cur); });
+    pos.textContent = (cur + 1) + ' / ' + n;
+    var a = slides[cur].querySelector('.notes');
+    body.innerHTML = a ? a.innerHTML : '<p style="opacity:.6">(slide này không có lời dẫn)</p>';
+    if (location.hash !== '#' + (cur + 1)) history.replaceState(null, '', '#' + (cur + 1));
+  }
+  function fromHash(){ var h = parseInt(location.hash.slice(1), 10); return isNaN(h) ? 0 : h - 1; }
+  function toggleNotes(){ notes.hidden = !notes.hidden; fit(); }
+  function toggleFull(){
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') show(cur + 1);
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') show(cur - 1);
+    else if (k === 'Home') show(0);
+    else if (k === 'End') show(n - 1);
+    else if (k === 'n' || k === 'N') toggleNotes();
+    else if (k === 'f' || k === 'F') toggleFull();
+    else return;
+    e.preventDefault();
+  });
+  document.querySelector('.bar').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.go) show(cur + parseInt(b.dataset.go, 10));
+    else if (b.id === 'bn') toggleNotes();
+    else if (b.id === 'bf') toggleFull();
+    b.blur();
+  });
+  // Vuốt trái/phải trên màn hình cảm ứng
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+  });
+  window.addEventListener('hashchange', function(){ show(fromHash()); });
+  window.addEventListener('resize', fit);
+  show(fromHash()); fit();
+})();
+</script>
+</body>
+</html>
