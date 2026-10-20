@@ -1,18 +1,18 @@
 {
   "name": "ntl-plugin",
-  "version": "0.1.0",
-  "description": "NTL Software skills (proposal decks, training material) sharing one NTL style",
+  "version": "0.2.0",
+  "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
   "author": {
     "name": "NTL Software"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "NTL Plugin",
-    "shortDescription": "NTL-style proposals and training material",
-    "longDescription": "Skills of NTL Software: proposal decks (.pptx) and training material (course design, handbook PDF, HTML slides, quizzes, workshops), all in the shared NTL style.",
+    "shortDescription": "NTL skills for every department, in NTL style",
+    "longDescription": "Skills of NTL Software departments, all in one shared NTL style. Current skills: proposal decks (.pptx) and training material (course design, handbook PDF, HTML slides, quizzes, workshops). More skills from other departments are added over time.",
     "developerName": "NTL Software",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use the NTL skills to make a proposal deck or training material in NTL style."
+    "defaultPrompt": "Use the NTL skills to do a task of my department in NTL style."
   }
 }

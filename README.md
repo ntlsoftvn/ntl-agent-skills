@@ -1,11 +1,13 @@
 # NTL agent skills
 
-Plugin **ntl-plugin** của NTL Software cho Claude và ChatGPT/Codex: các skill làm tài liệu theo đúng style NTL.
+Marketplace của NTL Software cho Claude và ChatGPT/Codex. Plugin **ntl-plugin** gom skill của các phòng ban trong NTL, dùng chung một bộ style NTL. Skill của phòng ban mới được thêm vào cùng plugin này.
 
-| Skill | Làm gì |
-|---|---|
-| `proposal` | Deck proposal (.pptx) cho PO / khách hàng: tóm tắt, kiến trúc hiện tại, vấn đề, giải pháp, lộ trình + team + effort, chi phí hạ tầng, giả định và rủi ro |
-| `training` | Tài liệu đào tạo: thiết kế khóa học / topic, handbook (HTML → PDF A4), slide HTML cho workshop, quiz, kịch bản workshop |
+Skill hiện có:
+
+| Skill | Phòng ban | Làm gì |
+|---|---|---|
+| `proposal` | Kinh doanh / Delivery | Deck proposal (.pptx) cho PO / khách hàng: tóm tắt, kiến trúc hiện tại, vấn đề, giải pháp, lộ trình + team + effort, chi phí hạ tầng, giả định và rủi ro |
+| `training` | Đào tạo | Tài liệu đào tạo: thiết kế khóa học / topic, handbook (HTML → PDF A4), slide HTML cho workshop, quiz, kịch bản workshop |
 
 Các skill dùng chung một bộ style NTL (màu, font, logo, cách đặt tên file, cách viết) ở `plugins/ntl-plugin/references/`, `assets/` và `scripts/`.
 
