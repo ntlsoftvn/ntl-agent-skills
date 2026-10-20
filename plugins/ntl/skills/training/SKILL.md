@@ -20,7 +20,7 @@ Training material of NTL Software, made the way the ntl-training-hub repo makes 
    - course code and topic code (UPPERCASE), course and topic names, version, audience, language (default: Vietnamese with English technical terms);
    - source material (notes, documents, existing handbook).
 2. Read `PLUGIN/references/brand.md`, `PLUGIN/references/writing.md`, `PLUGIN/references/html.md`, and `PLUGIN/references/diagrams.md` before drawing figures.
-3. Check tools once: `python3`, Google Chrome (or Chromium; `CHROME=/path` if elsewhere). Optional: poppler (`pdftotext`, `pdftoppm`) or `pip install pypdf` for table-of-contents numbers; `pip install fonttools` for glyph checks; `pip install pillow` for `compare.py`. Say what is missing and what it costs (e.g. "no page numbers in the TOC") instead of failing silently.
+3. Check tools once: `python3` (`python` on Windows, or wherever `python3` is not found; commands below say `python3`), Google Chrome (or Chromium; `CHROME=/path` if elsewhere). Optional: poppler (`pdftotext`, `pdftoppm`) or `pip install pypdf` for table-of-contents numbers; `pip install fonttools` for glyph checks; `pip install pillow` for `compare.py`. Say what is missing and what it costs (e.g. "no page numbers in the TOC") instead of failing silently.
 
 ## Routes
 

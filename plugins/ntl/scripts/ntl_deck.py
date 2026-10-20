@@ -1,7 +1,7 @@
 """NTL deck library for python-pptx: NTL cover/content layouts and the components of NTL proposal decks.
 
 Canvas 13.333" x 7.5" (1280x720 px at 96 px/in). Colours are hex values from references/brand.md, so the deck needs
-no theme post-processing. Needs python-pptx: run `sh scripts/setup_python.sh` once, then run the build script with python3.
+no theme post-processing. Needs python-pptx: run `sh scripts/setup_python.sh` once, then run the build script with python3 (python on Windows).
 
     import sys; sys.path.insert(0, "<PLUGIN>/scripts")
     import ntl_deck as ntl

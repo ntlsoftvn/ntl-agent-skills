@@ -4,7 +4,7 @@ NTL decks are generated with python-pptx through `PLUGIN/scripts/ntl_deck.py`, s
 
 ## Setup (once per machine)
 
-1. `python3 --version` (Python 3.9+). If missing, ask the user to install Python from https://www.python.org/downloads/; don't continue without it.
+1. `python3 --version` (Python 3.9+; the command is `python` on Windows, and wherever `python3` is not found; below, `python3` means whichever one exists). If missing, ask the user to install Python from https://www.python.org/downloads/; don't continue without it.
 2. If `python3 -c "import pptx"` fails, tell the user it will download the pip package python-pptx, then run
    `sh PLUGIN/scripts/setup_python.sh`. It installs into `~/.cache/ntl-agent-skills/python` (or a temp folder when the home folder is not writable; `NTL_PY_CACHE=<dir>` to choose); `ntl_deck.py` finds that folder on its own. Re-running it is cheap.
 3. Build: `python3 <work>/build_deck.py <out.pptx> [diagram_dir]`. Set `NTL_PLUGIN=<PLUGIN>` when the build script is not inside the plugin.
