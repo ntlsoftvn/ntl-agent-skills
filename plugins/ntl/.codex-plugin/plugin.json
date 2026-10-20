@@ -1,7 +1,8 @@
 {
   "name": "ntl",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
+  "homepage": "https://ntlsoftvn.github.io/ntl-agent-skills/",
   "author": {
     "name": "NTL Software"
   },
@@ -15,6 +16,7 @@
     "capabilities": [],
     "defaultPrompt": "Use the NTL skills to do a task of my department in NTL style.",
     "composerIcon": "./assets/icon.png",
-    "logo": "./assets/icon.png"
+    "logo": "./assets/icon.png",
+    "websiteURL": "https://ntlsoftvn.github.io/ntl-agent-skills/"
   }
 }

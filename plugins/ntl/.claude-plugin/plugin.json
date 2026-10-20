@@ -1,7 +1,8 @@
 {
   "name": "ntl",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "NTL Software skills for all departments (sales, training, and more), sharing one NTL style",
+  "homepage": "https://ntlsoftvn.github.io/ntl-agent-skills/",
   "author": {
     "name": "NTL Software"
   }
