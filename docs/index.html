@@ -3,18 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NTL Agent Skills | Hướng dẫn cài đặt</title>
-<meta name="description" content="Hướng dẫn cài đặt plugin ntl của NTL Software cho Claude Desktop và ChatGPT Desktop, từng bước kèm ảnh chụp màn hình.">
+<title>NTL Agent Skills | Plugin cho Claude và ChatGPT, hướng dẫn cài đặt</title>
+<meta name="description" content="Plugin ntl của NTL Software cho Claude Desktop, Cowork, ChatGPT Desktop và Codex: skill soạn proposal và tài liệu đào tạo theo phong cách NTL. Hướng dẫn cài đặt từng bước kèm ảnh chụp màn hình.">
 <meta name="author" content="NTL Software">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#14264A">
 <link rel="canonical" href="https://ntlsoftvn.github.io/ntl-agent-skills/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NTL Agent Skills">
 <meta property="og:url" content="https://ntlsoftvn.github.io/ntl-agent-skills/">
-<meta property="og:title" content="NTL Agent Skills | Hướng dẫn cài đặt">
-<meta property="og:description" content="Cài đặt plugin ntl của NTL Software vào Claude Desktop và ChatGPT Desktop: từng bước có hình minh hoạ.">
+<meta property="og:title" content="NTL Agent Skills | Plugin cho Claude và ChatGPT, hướng dẫn cài đặt">
+<meta property="og:description" content="Plugin ntl của NTL Software cho Claude Desktop, Cowork, ChatGPT Desktop và Codex: skill soạn proposal và tài liệu đào tạo theo phong cách NTL. Hướng dẫn cài đặt từng bước kèm ảnh chụp màn hình.">
+<meta property="og:image" content="https://ntlsoftvn.github.io/ntl-agent-skills/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NTL Agent Skills: plugin cho Claude và ChatGPT">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NTL Agent Skills | Plugin cho Claude và ChatGPT, hướng dẫn cài đặt">
+<meta name="twitter:description" content="Plugin ntl của NTL Software cho Claude Desktop, Cowork, ChatGPT Desktop và Codex: skill soạn proposal và tài liệu đào tạo theo phong cách NTL. Hướng dẫn cài đặt từng bước kèm ảnh chụp màn hình.">
+<meta name="twitter:image" content="https://ntlsoftvn.github.io/ntl-agent-skills/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ntlsoft.com.vn/#org",
+      "name": "NTL Software",
+      "legalName": "NTL Software JSC",
+      "url": "https://ntlsoft.com.vn",
+      "logo": "https://ntlsoftvn.github.io/ntl-agent-skills/assets/icon.png",
+      "sameAs": ["https://github.com/ntlsoftvn"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ntlsoftvn.github.io/ntl-agent-skills/#website",
+      "name": "NTL Agent Skills",
+      "url": "https://ntlsoftvn.github.io/ntl-agent-skills/",
+      "inLanguage": ["vi", "en"],
+      "publisher": { "@id": "https://ntlsoft.com.vn/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "NTL Agent Skills (ntl plugin)",
+      "url": "https://ntlsoftvn.github.io/ntl-agent-skills/",
+      "image": "https://ntlsoftvn.github.io/ntl-agent-skills/assets/og.png",
+      "description": "The ntl plugin from NTL Software for Claude Desktop, Cowork, ChatGPT Desktop and Codex: skills for proposal decks and training material in NTL style. Step-by-step install guide with screenshots.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Windows, macOS",
+      "softwareRequirements": "Claude Desktop or ChatGPT Desktop, Python 3.9+, Google Chrome",
+      "downloadUrl": "https://github.com/ntlsoftvn/ntl-agent-skills",
+      "codeRepository": "https://github.com/ntlsoftvn/ntl-agent-skills",
+      "license": "https://github.com/ntlsoftvn/ntl-agent-skills/blob/main/LICENSE",
+      "featureList": ["Proposal decks (.pptx) in NTL style", "Training courses, handbooks, workshop slides and quizzes"],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "publisher": { "@id": "https://ntlsoft.com.vn/#org" }
+    }
+  ]
+}
+</script>
 <link rel="icon" href="assets/icon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <script>try { var th = localStorage.getItem('ntl-theme'); if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th); } catch (e) {}</script>
@@ -195,7 +244,7 @@ footer { padding: 40px 0 28px; font-size: 14px; color: var(--ink-3); background:
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#"><img class="light-logo" src="assets/logo.png" alt="NTL Software"><img class="dark-logo" src="assets/logo-white.png" alt="NTL Software"><span class="txt">Agent Skills</span></a>
+    <a class="brand" href="./" aria-label="NTL Agent Skills"><img class="light-logo" src="assets/logo.png" alt="NTL Software"><img class="dark-logo" src="assets/logo-white.png" alt="NTL Software"><span class="txt">Agent Skills</span></a>
     <nav class="nav">
       <a href="#tools"><span class="vi">Cài công cụ</span><span class="en">Tools</span></a>
       <a href="#apps" data-app="chatgpt">ChatGPT Desktop</a>
@@ -220,7 +269,7 @@ footer { padding: 40px 0 28px; font-size: 14px; color: var(--ink-3); background:
 <section class="hero">
   <div class="wrap">
     <h1><span class="grad">NTL Agent Skills</span></h1>
-    <p class="sub"><span class="vi">Plugin của NTL Software dành cho Claude và ChatGPT.</span><span class="en">The plugin from NTL Software for Claude and ChatGPT.</span></p>
+    <p class="sub"><span class="vi">Plugin của NTL Software dành cho Claude và ChatGPT: soạn proposal và tài liệu đào tạo theo phong cách NTL.</span><span class="en">The plugin from NTL Software for Claude and ChatGPT: proposal decks and training material in NTL style.</span></p>
     <div class="ctas">
       <a class="btn btn-primary" href="#tools"><span class="vi">Bắt đầu cài đặt</span><span class="en">Start installing</span> →</a>
     </div>
@@ -396,8 +445,8 @@ footer { padding: 40px 0 28px; font-size: 14px; color: var(--ink-3); background:
 (function () {
   var root = document.documentElement;
   var META = {
-    vi: { title: 'NTL Agent Skills | Hướng dẫn cài đặt', desc: 'Hướng dẫn cài đặt plugin ntl của NTL Software cho Claude Desktop và ChatGPT Desktop, từng bước kèm ảnh chụp màn hình.' },
-    en: { title: 'NTL Agent Skills | Install guide', desc: 'Step-by-step guide, with screenshots, to installing the ntl plugin from NTL Software in Claude Desktop and ChatGPT Desktop.' }
+    vi: { title: 'NTL Agent Skills | Plugin cho Claude và ChatGPT, hướng dẫn cài đặt', desc: 'Plugin ntl của NTL Software cho Claude Desktop, Cowork, ChatGPT Desktop và Codex: skill soạn proposal và tài liệu đào tạo theo phong cách NTL. Hướng dẫn cài đặt từng bước kèm ảnh chụp màn hình.' },
+    en: { title: 'NTL Agent Skills | Plugin for Claude and ChatGPT, install guide', desc: 'The ntl plugin from NTL Software for Claude Desktop, Cowork, ChatGPT Desktop and Codex: skills for proposal decks and training material in NTL style. Step-by-step install guide with screenshots.' }
   };
   function setLang(l) {
     root.setAttribute('data-lang', l);
